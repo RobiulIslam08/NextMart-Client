@@ -15,11 +15,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { registrationSchema } from "./registerValidation";
+import { registerUser } from "@/services/AuthService";
 
 const RegisterForm = () => {
   const form = useForm({resolver:zodResolver(registrationSchema)})
-  const onSubmit:SubmitHandler<FieldValues> = (data) => {
-    console.log(data)
+  const onSubmit:SubmitHandler<FieldValues> = async(data) => {
+  try {
+    const res = await registerUser(data)
+    console.log(res)
+  } catch (error) {
+    return Error(String(error))
+  }
   }
 
   const password = form.watch('password')
