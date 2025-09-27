@@ -1,4 +1,5 @@
 "use client";
+import ReCAPTCHA from "react-google-recaptcha";
 import Logo from "@/app/assets/svgs/Logo";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +16,6 @@ import React from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { loginUser } from "@/services/AuthService";
 import { toast } from "sonner";
-
 
 import { loginSchema } from "./loginValidation";
 import Link from "next/link";
@@ -37,6 +37,9 @@ const LoginForm = () => {
     } catch (error) {
       return Error(String(error));
     }
+  };
+  const handleReCaptcha = (value: string | null) => {
+    console.log(value);
   };
   return (
     <div className="max-w-md  shadow-2xl border-2 p-6 rounded-2xl flex-grow">
@@ -79,8 +82,15 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-
-          <Button className="w-full" type="submit">{isSubmitting ? "Loging..." : "Login"}</Button>
+        <div className="flex mt-3 justify-center items-center">
+            <ReCAPTCHA
+            sitekey={process.env.NEXT_PUBLIC_RECAPCHA_CLIENT_KEY || ""}
+            onChange={handleReCaptcha}
+          />
+        </div>
+          <Button className="w-full" type="submit">
+            {isSubmitting ? "Loging..." : "Login"}
+          </Button>
         </form>
       </Form>
       <p className="text-sm text-gray-600 text-center my-3">
