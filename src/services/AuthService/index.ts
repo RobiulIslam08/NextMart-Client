@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use server"
+"use server";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { FieldValue } from "react-hook-form";
@@ -13,7 +13,13 @@ export const registerUser = async (userData: FieldValue<any>) => {
       },
       body: JSON.stringify(userData),
     });
-    return res.json();
+    const result = await res.json();
+    const storeCookies = await cookies();
+    console.log(result);
+    if (result.success) {
+      storeCookies.set("accessToken", result.data.accessToken);
+    }
+    return result;
   } catch (error: any) {
     return Error(error);
   }
@@ -27,11 +33,11 @@ export const loginUser = async (userData: FieldValue<any>) => {
       },
       body: JSON.stringify(userData),
     });
-    const result = await res.json()
-    const storeCookies = await cookies()
-    console.log(result)
-    if(result.success){
-      storeCookies.set("accessToken", result.data.accessToken)
+    const result = await res.json();
+    const storeCookies = await cookies();
+    console.log(result);
+    if (result.success) {
+      storeCookies.set("accessToken", result.data.accessToken);
     }
     return result;
   } catch (error: any) {
@@ -39,13 +45,13 @@ export const loginUser = async (userData: FieldValue<any>) => {
   }
 };
 
-export const getCurrentUser = async () =>{
-const accessToken =( await cookies()).get("accessToken")!.value;
-let decodedData = null;
-if (accessToken){
-  decodedData= await jwtDecode(accessToken)
-  return decodedData
-}else{
-  return null
-}
-}
+export const getCurrentUser = async () => {
+  const accessToken = (await cookies()).get("accessToken")?.value;
+  let decodedData = null;
+  if (accessToken) {
+    decodedData = await jwtDecode(accessToken);
+    return decodedData;
+  } else {
+    return null;
+  }
+};
