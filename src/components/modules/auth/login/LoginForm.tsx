@@ -12,9 +12,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { loginUser } from "@/services/AuthService";
+import { loginUser, reCaptchaTokenVerifacaion } from "@/services/AuthService";
 import { toast } from "sonner";
 
 import { loginSchema } from "./loginValidation";
@@ -22,6 +22,7 @@ import Link from "next/link";
 
 const LoginForm = () => {
   const form = useForm({ resolver: zodResolver(loginSchema) });
+    const [reCaptchaStatus, setReCaptchaStatus] = useState(false);
   const {
     formState: { isSubmitting },
   } = form;
@@ -38,8 +39,15 @@ const LoginForm = () => {
       return Error(String(error));
     }
   };
-  const handleReCaptcha = (value: string | null) => {
-    console.log(value);
+  const handleReCaptcha =async (value: string | null) => {
+    try {
+      const res = await reCaptchaTokenVerifacaion(value!);
+      if (res?.success) {
+        setReCaptchaStatus(true);
+      }
+    } catch (err: unknown) {
+      console.error(err);
+    }
   };
   return (
     <div className="max-w-md  shadow-2xl border-2 p-6 rounded-2xl flex-grow">
@@ -88,7 +96,7 @@ const LoginForm = () => {
             onChange={handleReCaptcha}
           />
         </div>
-          <Button className="w-full" type="submit">
+          <Button disabled={reCaptchaStatus? false :true} className="w-full" type="submit">
             {isSubmitting ? "Loging..." : "Login"}
           </Button>
         </form>
