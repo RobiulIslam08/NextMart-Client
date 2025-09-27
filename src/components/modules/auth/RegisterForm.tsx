@@ -20,6 +20,7 @@ import { toast } from "sonner";
 
 const RegisterForm = () => {
   const form = useForm({resolver:zodResolver(registrationSchema)})
+  const {formState:{isSubmitting}} = form
   const onSubmit:SubmitHandler<FieldValues> = async(data) => {
   try {
     const res = await registerUser(data)
@@ -102,7 +103,7 @@ const RegisterForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Register</Button>
+        <Button type="submit">{isSubmitting?"Registering...":"Register"}</Button>
         </form>
       </Form>
     </div>
