@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -30,6 +31,7 @@ export default function CreateShopForm() {
   } = form;
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+	console.log(data)
     const servicesOffered = data?.servicesOffered
       .split(",")
       .map((service: string) => service.trim())
@@ -43,6 +45,7 @@ export default function CreateShopForm() {
 
     try {
       const formData = new FormData();
+	
       formData.append("data", JSON.stringify(modifiedData));
       formData.append("logo", imageFiles[0] as File);
 
