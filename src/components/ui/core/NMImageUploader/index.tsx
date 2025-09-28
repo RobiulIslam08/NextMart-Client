@@ -1,13 +1,24 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Input } from "../../input";
 
+type TImageUploaderProps = {
+	imageFiles: File[] | [];
+	setImageFiles:Dispatch<SetStateAction<[] | File[]>>
+}
 
-
-const  NMImageUploader= () => {
-	const [imageFile, setImageFile] = useState<File[] | []>([])
+const  NMImageUploader= ({imageFiles, setImageFiles}:TImageUploaderProps) => {
+	const [imagePreview, setImagePreview] = useState<string[] | []>([])
 	const handleImageChange = (event:React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files![0]
-		setImageFile((prev)=> [...prev, file])
+		setImageFiles((prev)=> [...prev, file])
+		if(file){
+			const reader = new FileReader()
+			reader.onloadend = () => {
+				setImagePreview((prev) => [...prev,reader.result as string])
+			}
+			reader.readAsDataURL(file) // এই কাজ টা আগে হবে। তারপর onloadend  এর কাজ হবে কারণ async func. url টা হয়ে তারপর onloadend এর funcion এর setImagePreview state এ set হবে। 
+		}
+		event.target.value = ""
 	}
 	return (
 		<div>
