@@ -31,14 +31,11 @@ export const middleware = async (request: NextRequest) => {
 };
 export const config = {
   matcher: [
-    "/login", // /login রুটের জন্য
-    "/register", // /register রুটের জন্য (Auth রুট, matcher এ থাকা ভালো)
-    "/create-shop", // /create-shop রুটের জন্য
-
-    // ADMIN এর নিচের সব রুটের জন্য (যেমন: /admin, /admin/dashboard, /admin/products/edit)
-    "/admin/:path*",
-
-    // USER এর নিচের সব রুটের জন্য (যেমন: /user, /user/profile, /user/settings)
-    "/user/:path*",
+     "/login",
+  "/create-shop",
+  "/admin",
+  "/admin/:page",
+  "/user",
+  "/user/:page",
   ],
 };
