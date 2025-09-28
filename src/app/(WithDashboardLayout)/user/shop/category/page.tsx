@@ -1,10 +1,13 @@
 import MangaeCategories from "@/components/modules/shop/category";
+import { getAllCategories } from "@/services/category";
 
 
-const ProductCategory = () => {
+const ProductCategory = async() => {
+	const {data} = await getAllCategories()
+	
 	return (
 		<div>
-<MangaeCategories/>
+<MangaeCategories categories={data}/>
 		</div>
 	);
 };
