@@ -1,4 +1,4 @@
-
+"use client"
 import Logo from "@/app/assets/svgs/Logo";
 import { Button } from "../ui/button";
 import { Heart, LogOut, ShoppingBag } from "lucide-react";
@@ -12,8 +12,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { logout } from "@/services/AuthService";
 
 export default function Navbar() {
+  const handleLogOut = () => {
+    logout()
+
+  }
   return (
     <header className="border-b w-full">
       <div className="container flex justify-between items-center mx-auto h-16 px-3">
@@ -59,7 +64,7 @@ export default function Navbar() {
     <DropdownMenuItem>Dashboard</DropdownMenuItem>
     <DropdownMenuItem>My Shop</DropdownMenuItem>
         <DropdownMenuSeparator />
-    <DropdownMenuItem><LogOut/><span>Logout</span></DropdownMenuItem>
+    <DropdownMenuItem className="bg-red-500 hover:bg-red-400 cursor-pointer" onClick={handleLogOut}><LogOut/><span>Logout</span></DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
         </nav>
