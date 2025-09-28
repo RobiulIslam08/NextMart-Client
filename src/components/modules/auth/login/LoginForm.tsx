@@ -19,10 +19,14 @@ import { toast } from "sonner";
 
 import { loginSchema } from "./loginValidation";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const LoginForm = () => {
   const form = useForm({ resolver: zodResolver(loginSchema) });
-    const [reCaptchaStatus, setReCaptchaStatus] = useState(false);
+  const [reCaptchaStatus, setReCaptchaStatus] = useState(false);
+  const searchParams = useSearchParams()
+  const redirect = searchParams.get("redirectPath")
+  const router = useRouter()
   const {
     formState: { isSubmitting },
   } = form;
@@ -31,6 +35,11 @@ const LoginForm = () => {
       const res = await loginUser(data);
       if (res?.success) {
         toast.success(res?.message);
+        if(redirect){
+          router.push(redirect)
+        }else{
+          router.push('/profile')
+        }
       } else {
         toast.error(res?.message);
       }
@@ -39,7 +48,7 @@ const LoginForm = () => {
       return Error(String(error));
     }
   };
-  const handleReCaptcha =async (value: string | null) => {
+  const handleReCaptcha = async (value: string | null) => {
     try {
       const res = await reCaptchaTokenVerifacaion(value!);
       if (res?.success) {
@@ -90,13 +99,17 @@ const LoginForm = () => {
               </FormItem>
             )}
           />
-        <div className="flex mt-3 justify-center items-center">
+          <div className="flex mt-3 justify-center items-center">
             <ReCAPTCHA
-            sitekey={process.env.NEXT_PUBLIC_RECAPCHA_CLIENT_KEY || ""}
-            onChange={handleReCaptcha}
-          />
-        </div>
-          <Button disabled={reCaptchaStatus? false :true} className="w-full" type="submit">
+              sitekey={process.env.NEXT_PUBLIC_RECAPCHA_CLIENT_KEY || ""}
+              onChange={handleReCaptcha}
+            />
+          </div>
+          <Button
+            disabled={reCaptchaStatus ? false : true}
+            className="w-full"
+            type="submit"
+          >
             {isSubmitting ? "Loging..." : "Login"}
           </Button>
         </form>
