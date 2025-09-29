@@ -111,9 +111,10 @@ const {append:appendFeatures,fields:featureFields} = useFieldArray({  // এখ�
   }, []);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const availableColors = data.availableColors.map(
-      (color: { value: string }) => color.value
+	
+    const availableColors = data.availableColors.map((color: { value: string }) => color.value
     );
+	console.log(availableColors)
 
     const keyFeatures = data.keyFeatures.map(
       (feature: { value: string }) => feature.value
@@ -143,20 +144,24 @@ const {append:appendFeatures,fields:featureFields} = useFieldArray({  // এখ�
     for (const file of imageFiles) {
       formData.append("images", file);
     }
+    console.log(formData)
+ 
     try {
       const res = await addProduct(formData);
+    
 
       if (res.success) {
         toast.success(res.message);
         router.push("/user/shop/products");
+        router.refresh(); 
       } else {
         toast.error(res.message);
       }
     } catch (err: any) {
       console.error(err);
+         console.log(formData)
     }
   };
-
   return (
     <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-2xl p-5 ">
       <div className="flex items-center space-x-4 mb-5 ">
