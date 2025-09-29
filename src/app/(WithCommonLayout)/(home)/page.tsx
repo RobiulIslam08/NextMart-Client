@@ -1,15 +1,33 @@
-"use client"
+// "use client";
+// import Category from "@/components/modules/home/Category";
+// import HeroSection from "@/components/modules/home/HeroSection";
+// import { useUser } from "@/context/UserContext";
+
+
+
+// const HomePage = () => {
+//  const user = useUser()
+//   console.log('from home page',user)
+//   return (
+//     <div>
+//       <HeroSection/>
+//       <Category/>
+//     </div>
+//   );
+// };
+
+// export default HomePage;
+// page.tsx
 import HeroSection from "@/components/modules/home/HeroSection";
-import { useUser } from "@/context/UserContext";
+import Category from "@/components/modules/home/Category";
+import { getAllCategories } from "@/services/category";
 
-
-
-const HomePage = () => {
- const user = useUser()
-  console.log('from home page',user)
+const HomePage = async () => {
+  const { data: categories } = await getAllCategories();
   return (
     <div>
-      <HeroSection/>
+      <HeroSection />
+      <Category categories={categories} />
     </div>
   );
 };
