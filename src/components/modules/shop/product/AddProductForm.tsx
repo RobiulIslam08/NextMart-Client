@@ -32,8 +32,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { IBrand, ICategory } from "@/types";
-// import { getAllCategories } from "@/services/Category";
-// import { getAllBrands } from "@/services/Brand";
 import { addProduct } from "@/services/Product";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -59,7 +57,7 @@ export default function AddProductsForm() {
       stock: "",
       weight: "",
       availableColors: [{ value: "" }],
-      keyFeatures: [{ value: "" }],
+      keyFeatures: [{ value: "" }], // এর মাধ্যমে initial একটা ইনপুন ফিল্ড সেট করা হয়েছে
       specification: [{ key: "", value: "" }],
     },
   });
@@ -77,15 +75,16 @@ export default function AddProductsForm() {
     appendColor({ value: "" });
   };
 
-  const { append: appendFeatures, fields: featureFields } = useFieldArray({
-    control: form.control,
-    name: "keyFeatures",
-  });
 
+
+const {append:appendFeatures,fields:featureFields} = useFieldArray({  // এখানে দুইটা value নেয় ।আর এদরে কে  আমি rename করে নিয়েছি। 
+	control:form.control, // field কে controll করে নিলাম
+	name:"keyFeatures" // যে input field কে ডাইনামিক করা হবে।
+})
+//appendFeatures এটাকে addFeatures নামে functoin create করে তার ভিতর কল করে দিবে। তারপর addFeatures ফংশনটাকে button এ কল করে দিবো
   const addFeatures = () => {
     appendFeatures({ value: "" });
   };
-
   const { append: appendSpec, fields: specFields } = useFieldArray({
     control: form.control,
     name: "specification",
