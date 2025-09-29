@@ -1,5 +1,5 @@
 "use client"
-import { Button } from "@/components/ui/button";
+import HeroSection from "@/components/modules/home/HeroSection";
 import { useUser } from "@/context/UserContext";
 
 
@@ -9,7 +9,7 @@ const HomePage = () => {
   console.log('from home page',user)
   return (
     <div>
-      <Button>Click me </Button>
+      <HeroSection/>
     </div>
   );
 };
