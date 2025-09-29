@@ -31,7 +31,7 @@ const CreateCategoryModal = () => {
 
   const form = useForm();
   const {
-    formState: { isSubmitting },
+    formState: { isSubmitting},
   } = form;
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
