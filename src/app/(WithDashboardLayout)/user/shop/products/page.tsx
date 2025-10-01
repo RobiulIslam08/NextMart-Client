@@ -22,8 +22,8 @@ const ManageProductsPage = async () => {
   const productsData = apiResponse?.success ? apiResponse.data : [];
   return (
     <div>
-            {/* productsData ব্যবহার করুন, যা একটি IProduct[] অ্যারে */}
-            <ManageProducts products={productsData} />   {" "}
+       {/* productsData ব্যবহার করুন, যা একটি IProduct[] অ্যারে */}
+       <ManageProducts products={productsData} />{" "}
     </div>
   );
 };
