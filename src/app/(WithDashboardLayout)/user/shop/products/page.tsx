@@ -17,13 +17,12 @@ import { getAllProducts } from "@/services/Product";
 
 const ManageProductsPage = async () => {
   // apiResponse এ { success: true, data: [...], ... } এই ফরম্যাটটি আসবে
-  const apiResponse = await getAllProducts();
-  console.log("from ManageProduct Pge", apiResponse); // নিশ্চিত করুন যে data প্রোপার্টিটি সফলভাবে destructure হচ্ছে এবং এটি একটি অ্যারে। // যদি success না থাকে বা data না থাকে, তবে একটি খালি অ্যারে ([]) ব্যবহার করুন।
-  const productsData = apiResponse?.success ? apiResponse.data : [];
+  const {data, meta} = await getAllProducts();
+  // console.log("from ManageProduct Pge", apiResponse); // নিশ্চিত করুন যে data প্রোপার্টিটি সফলভাবে destructure হচ্ছে এবং এটি একটি অ্যারে। // যদি success না থাকে বা data না থাকে, তবে একটি খালি অ্যারে ([]) ব্যবহার করুন।
+  // const productsData = apiResponse?.success ? apiResponse.data : [];
   return (
     <div>
-       {/* productsData ব্যবহার করুন, যা একটি IProduct[] অ্যারে */}
-       <ManageProducts products={productsData} />{" "}
+       <ManageProducts products={data} meta={meta}/>
     </div>
   );
 };
