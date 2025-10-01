@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 interface INMContainerProps {
 	children:ReactNode,
-	className:string
+	className?:string
 }
 const NMContainer = ({children, className}: INMContainerProps) => {
 	return (
