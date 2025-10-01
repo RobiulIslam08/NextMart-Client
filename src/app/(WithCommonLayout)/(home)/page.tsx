@@ -23,6 +23,7 @@ import Category from "@/components/modules/home/Category";
 import { getAllCategories } from "@/services/category";
 import { getAllProducts } from "@/services/Product";
 import FeaturedProducts from "@/components/modules/home/FeaturedProducts";
+import FlashSale from "@/components/modules/home/FlashSale";
 
 const HomePage = async () => {
   const { data: categories } = await getAllCategories();
@@ -32,6 +33,7 @@ const HomePage = async () => {
       <HeroSection />
       <Category categories={categories} />
       <FeaturedProducts products={products}/>
+      <FlashSale/>
     </div>
   );
 };
