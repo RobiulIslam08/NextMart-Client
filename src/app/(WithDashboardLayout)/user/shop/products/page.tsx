@@ -15,14 +15,13 @@ import { getAllProducts } from "@/services/Product";
 // export default ManageProductsPage;
 // src/app/(WithDashboardLayout)/user/shop/products/page.tsx
 
-const ManageProductsPage = async () => {
-  // apiResponse এ { success: true, data: [...], ... } এই ফরম্যাটটি আসবে
-  const {data, meta} = await getAllProducts();
-  // console.log("from ManageProduct Pge", apiResponse); // নিশ্চিত করুন যে data প্রোপার্টিটি সফলভাবে destructure হচ্ছে এবং এটি একটি অ্যারে। // যদি success না থাকে বা data না থাকে, তবে একটি খালি অ্যারে ([]) ব্যবহার করুন।
-  // const productsData = apiResponse?.success ? apiResponse.data : [];
+const ManageProductsPage = async ({searchParams}: {searchParams:Promise<{page:string}>}) => {
+const {page} = await searchParams
+  const {data, meta} = await getAllProducts(page,'3');
+
   return (
     <div>
-       <ManageProducts products={data} meta={meta}/>
+       <ManageProducts products={data} meta={meta} />
     </div>
   );
 };
