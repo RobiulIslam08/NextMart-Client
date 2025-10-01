@@ -49,7 +49,7 @@ const Category = ({ categories }: { categories: ICategory[] }) => {
         </Link>
       </div>
       <div className="grid grid-cols-6 gap-8 my-5">
-        {categories.map((category, idx) => (
+        {categories.slice(0,5).map((category, idx) => (
           <CategoryCard key={idx} category={category} />
         ))}
       </div>
