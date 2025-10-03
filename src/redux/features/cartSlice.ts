@@ -34,16 +34,21 @@ const cartSlice = createSlice({
 	 },
 	 decrementOrderQuantity: (state, action) => { //action.payload এ _id আসবে। 
 		const productToIncrement = state.products.find((product) => product._id === action.payload)
-		if(productToIncrement){
+		if(productToIncrement && productToIncrement.orderQuantity >1){
 			productToIncrement.orderQuantity -=1;
 			return;
 		}
-	 }
+	 },
+	    removeProduct: (state, action) => {
+      state.products = state.products.filter(
+        (product) => product._id !== action.payload
+      );
+    },
 
 	}
 })
 export const orderedProductsSelector = (state:RootState) => {
 	return state.cart.products
 }
-export const {addProduct,incrementOrderQuantity, decrementOrderQuantity} = cartSlice.actions
+export const {addProduct,incrementOrderQuantity, decrementOrderQuantity, removeProduct} = cartSlice.actions
 export default cartSlice.reducer;
