@@ -1,5 +1,6 @@
 import { IProduct } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
 interface InitialState {
 	products:IProduct[]
@@ -16,5 +17,8 @@ const cartSlice = createSlice({
 	 }
 	}
 })
+export const orderedProductsSelector = (state:RootState) => {
+	return state.cart.products
+}
 export const {addProduct} = cartSlice.actions
 export default cartSlice.reducer;
