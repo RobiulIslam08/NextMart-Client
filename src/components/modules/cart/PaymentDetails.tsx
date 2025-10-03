@@ -21,6 +21,7 @@ import { useAppSelector } from "@/redux/hooks";
 // import { toast } from "sonner";
 
 export default function PaymentDetails() {
+  
   const subTotal = useAppSelector(subTotalSelector);
 //   const shippingCost = useAppSelector(shippingCostSelector);
 //   const grandTotal = useAppSelector(grandTotalSelector);
