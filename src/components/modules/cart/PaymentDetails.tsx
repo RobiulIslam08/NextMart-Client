@@ -1,78 +1,23 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { orderSelector, shippingCostSelector, subTotalSelector } from "@/redux/features/cartSlice";
+import {
+  grandTotalSelector,
+  orderSelector,
+  shippingCostSelector,
+  subTotalSelector,
+} from "@/redux/features/cartSlice";
 import { useAppSelector } from "@/redux/hooks";
-import { toast } from "sonner";
-// import { useUser } from "@/context/UserContext";
-// import { currencyFormatter } from "@/lib/currencyFormatter";
-// import {
-//   citySelector,
-//   clearCart,
-//   grandTotalSelector,
-//   orderedProductsSelector,
-//   orderSelector,
-//   shippingAddressSelector,
-//   shippingCostSelector,
-//   subTotalSelector,
-// } from "@/redux/features/cartSlice";
-// import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-// import { createOrder } from "@/services/cart";
-// import { useRouter } from "next/navigation";
-// import { toast } from "sonner";
 
 export default function PaymentDetails() {
-
   const subTotal = useAppSelector(subTotalSelector);
-  const shippingCost = useAppSelector(shippingCostSelector)
-//   const shippingCost = useAppSelector(shippingCostSelector);
-//   const grandTotal = useAppSelector(grandTotalSelector);
+  const shippingCost = useAppSelector(shippingCostSelector);
+  const grandTotal = useAppSelector(grandTotalSelector)
+
   const order = useAppSelector(orderSelector);
-//   const city = useAppSelector(citySelector);
-//   const shippingAddress = useAppSelector(shippingAddressSelector);
-//   const cartProducts = useAppSelector(orderedProductsSelector);
-
-//   const user = useUser();
-
-//   const router = useRouter();
-
-//   const dispatch = useAppDispatch();
 
   const handleOrder = async () => {
-    // const orderLoading = toast.loading("Order is being placed");
-    console.log(order)
-
-    // try {
-    //   if (!user.user) {
-    //     router.push("/login");
-    //     throw new Error("Please login first.");
-    //   }
-
-    //   if (!city) {
-    //     throw new Error("City is missing");
-    //   }
-    //   if (!shippingAddress) {
-    //     throw new Error("Shipping address is missing");
-    //   }
-
-    //   if (cartProducts.length === 0) {
-    //     throw new Error("Cart is empty, what are you trying to order ??");
-    //   }
-
-    //   const res = await createOrder(order);
-
-    //   if (res.success) {
-    //     toast.success(res.message, { id: orderLoading });
-    //     dispatch(clearCart());
-    //     router.push(res.data.paymentUrl);
-    //   }
-
-    //   if (!res.success) {
-    //     toast.error(res.message, { id: orderLoading });
-    //   }
-    // } catch (error: any) {
-    //   toast.error(error.message, { id: orderLoading });
-    // }
+    console.log(order);
   };
 
   return (
@@ -94,7 +39,7 @@ export default function PaymentDetails() {
       </div>
       <div className="flex justify-between mt-10 mb-5">
         <p className="text-gray-500 ">Grand Total</p>
-        <p className="font-semibold">250</p>
+        <p className="font-semibold">{grandTotal}</p>
       </div>
       <Button
         onClick={handleOrder}

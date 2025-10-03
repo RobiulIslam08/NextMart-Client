@@ -86,6 +86,11 @@ export const shippingCostSelector = (state:RootState) => {
 		return 0;
 	}
 }
+export const grandTotalSelector = (state:RootState) => {
+  const subTotal = subTotalSelector(state)
+  const shippingCost = shippingCostSelector(state)
+  return subTotal + shippingCost
+}
 
 
 // product
