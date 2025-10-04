@@ -1,14 +1,35 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { configureStore } from "@reduxjs/toolkit";
-import cartSlice from "./features/cartSlice";
+import cartReducer from "./features/cartSlice";
+import {persistReducer,  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,} from "redux-persist" //for redux-persist
+import storage from "./storage";
+// import storage from "redux-persist/lib/storage"  //for redux-persist // এইটার পরিবতেৃ আমরা storage.ts এ create করা storage কে import করে নিলাম noop storage error টাকে solve করার জন্য
 
 //! We will not do this
 //! This is a global variable so we will avoid this
 // const store = configureStore({});
+
+const persistOptions = { //for redux-persist
+  key:"cart",
+  storage
+}
+const persistedCart = persistReducer(persistOptions, cartReducer)  //for redux-persist
 export const makeStore = () => {
   return configureStore({
     reducer: {
-       cart: cartSlice 
+       cart: persistedCart 
       },
+       middleware: (getDefaultMiddlewares: any) =>
+      getDefaultMiddlewares({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      })
   });
 };
 

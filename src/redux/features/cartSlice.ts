@@ -4,11 +4,10 @@ import { RootState } from "../store";
 
 export interface CartProduct extends IProduct {
   orderQuantity: number;
-  
 }
 interface InitialState {
   products: CartProduct[];
-    city: string;
+  city: string;
   shippingAddress: string;
 }
 const initialState: InitialState = {
@@ -56,12 +55,17 @@ const cartSlice = createSlice({
         (product) => product._id !== action.payload
       );
     },
-	updateCity:(state,action) => {
-		state.city = action.payload
-	},
-	updateShipingAddress:(state,action) => {
-		state.shippingAddress = action.payload
-	},
+    updateCity: (state, action) => {
+      state.city = action.payload;
+    },
+    updateShipingAddress: (state, action) => {
+      state.shippingAddress = action.payload;
+    },
+    clearCart: (state) => {
+      state.city = "";
+      state.products = [];
+      state.shippingAddress= "";
+    }
   },
 });
 //payment
@@ -76,38 +80,44 @@ export const subTotalSelector = (state: RootState) => {
     }
   }, 0);
 };
-export const shippingCostSelector = (state:RootState) => {
-	if(state.cart.city  && state.cart.city === "Dhaka"  && state.cart.products.length > 0 ){
-		return 50;
-	}else if (state.cart.city  && state.cart.city !== "Dhaka" && state.cart.products.length > 0  ){
-		return 150;
-	}
-	else{
-		return 0;
-	}
-}
-export const grandTotalSelector = (state:RootState) => {
-  const subTotal = subTotalSelector(state)
-  const shippingCost = shippingCostSelector(state)
-  return subTotal + shippingCost
-}
-
+export const shippingCostSelector = (state: RootState) => {
+  if (
+    state.cart.city &&
+    state.cart.city === "Dhaka" &&
+    state.cart.products.length > 0
+  ) {
+    return 50;
+  } else if (
+    state.cart.city &&
+    state.cart.city !== "Dhaka" &&
+    state.cart.products.length > 0
+  ) {
+    return 150;
+  } else {
+    return 0;
+  }
+};
+export const grandTotalSelector = (state: RootState) => {
+  const subTotal = subTotalSelector(state);
+  const shippingCost = shippingCostSelector(state);
+  return subTotal + shippingCost;
+};
 
 // product
 export const orderedProductsSelector = (state: RootState) => {
   return state.cart.products;
 };
-export const orderSelector = (state:RootState) => {
-   return {
-	products:state.cart.products.map((product) => ({
-		product:product._id,
-		quantity:product.orderQuantity,
-    color:"white"
-	})),
-	shippingAddress: `${state.cart.shippingAddress} - ${state.cart.city}`,
-	paymentMethod:"Online"
-   }
-}
+export const orderSelector = (state: RootState) => {
+  return {
+    products: state.cart.products.map((product) => ({
+      product: product._id,
+      quantity: product.orderQuantity,
+      color: "white",
+    })),
+    shippingAddress: `${state.cart.shippingAddress} - ${state.cart.city}`,
+    paymentMethod: "Online",
+  };
+};
 
 //* Address
 
@@ -124,6 +134,7 @@ export const {
   decrementOrderQuantity,
   removeProduct,
   updateCity,
-  updateShipingAddress
+  updateShipingAddress,
+  clearCart,
 } = cartSlice.actions;
 export default cartSlice.reducer;
